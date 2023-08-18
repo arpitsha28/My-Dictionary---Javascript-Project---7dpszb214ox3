@@ -33,7 +33,7 @@ function createWordCard(wordData) {
   wordTitle.textContent = "Word: " + wordData.word;
 
   const wordMeaning = document.createElement("p");
-  wordMeaning.textContent = "' "+wordData.meanings[0].definitions[0].definition+"'";
+  wordMeaning.textContent = "' "+wordData.definition+"'";
 
   card.appendChild(wordTitle);
   card.appendChild(wordMeaning);
@@ -91,10 +91,10 @@ function showSearch() {
     searchContainer.appendChild(searchButton);
   
     const main = document.querySelector("#main");
-    main.innerHTML = ""; // Clear the main content
+    main.innerHTML = "";
   
     main.appendChild(searchContainer);
-    main.appendChild(wordCardsContainer); // Use the existing wordCardsContainer
+    main.appendChild(wordCardsContainer);
   }
 
 function createHistoryCard(searchData) {
@@ -118,6 +118,7 @@ function createHistoryCard(searchData) {
   card.appendChild(wordTitle);
   card.appendChild(wordMeaning);
   card.appendChild(deleteButton);
+  console.log(card);
 
   return card;
 }
