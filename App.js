@@ -33,7 +33,7 @@ function createWordCard(wordData) {
   wordTitle.textContent = "Word: " + wordData.word;
 
   const wordMeaning = document.createElement("p");
-  wordMeaning.textContent = wordData.meanings[0].definitions[0].definition;
+  wordMeaning.textContent = "' "+wordData.meanings[0].definitions[0].definition+"'";
 
   card.appendChild(wordTitle);
   card.appendChild(wordMeaning);
@@ -64,40 +64,38 @@ historyButton.addEventListener("click", function() {
 });
 
 function showHistory() {
-  const searches = JSON.parse(localStorage.getItem("searches")) || [];
-  const historyContainer = document.createElement("div");
-  historyContainer.id = "historyContainer";
-
-  for (const search of searches) {
-    const historyCard = createHistoryCard(search);
-    historyContainer.appendChild(historyCard);
+    const searches = JSON.parse(localStorage.getItem("searches")) || [];
+    const historyContainer = document.createElement("div");
+    historyContainer.id = "historyContainer";
+  
+    if (searches.length === 0) {
+      const noHistoryMessage = document.createElement("h2");
+      noHistoryMessage.id = "noHistoryItmes";
+      noHistoryMessage.textContent = "No history items";
+      historyContainer.appendChild(noHistoryMessage);
+    } else {
+      for (const search of searches) {
+        const historyCard = createHistoryCard(search);
+        historyContainer.appendChild(historyCard);
+      }
+    }
+  
+    const main = document.querySelector("#main");
+    main.appendChild(historyContainer);
   }
 
-  const main = document.querySelector("#main");
-  main.appendChild(historyContainer);
-}
-
 function showSearch() {
-  const searchContainer = document.createElement("div");
-  searchContainer.classList.add("search-container");
-  searchContainer.appendChild(searchInput);
-  searchContainer.appendChild(searchButton);
-
-  const wordCardsContainer = document.createElement("div");
-  wordCardsContainer.classList.add("word-cards");
-  wordCardsContainer.id = "wordCards";
-
-
-  const main = document.querySelector("#main");
-  main.innerHTML = ""; // Clear the main content
-
-  main.appendChild(searchContainer);
-  main.appendChild(wordCardsContainer);
-
-
+    const searchContainer = document.createElement("div");
+    searchContainer.classList.add("search-container");
+    searchContainer.appendChild(searchInput);
+    searchContainer.appendChild(searchButton);
   
-
-}
+    const main = document.querySelector("#main");
+    main.innerHTML = ""; // Clear the main content
+  
+    main.appendChild(searchContainer);
+    main.appendChild(wordCardsContainer); // Use the existing wordCardsContainer
+  }
 
 function createHistoryCard(searchData) {
   const card = document.createElement("div");
